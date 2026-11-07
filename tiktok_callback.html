@@ -4,9 +4,10 @@
 button{font-size:20px;padding:16px 36px;border-radius:12px;border:0;background:#1f2a44;color:#fff}p{line-height:1.8}</style>
 <h1>TikTok と連携</h1>
 <p id="m">下のボタンを押すと、Mac のターミナルが自動で受け取ります。</p>
+<input id="t" readonly style="display:none;width:80%;margin:16px auto;padding:8px;font-size:12px;color:transparent;text-shadow:0 0 6px #888">
 <button id="b">コピー</button>
 <script>
 const q=new URLSearchParams(location.search),c=q.get("code"),s=q.get("state")||"";
 if(!c){document.getElementById("m").textContent="許可されませんでした："+(q.get("error_description")||q.get("error")||"");document.getElementById("b").hidden=true}
-document.getElementById("b").onclick=async()=>{await navigator.clipboard.writeText("TTCODE:"+c+"|"+s);document.getElementById("m").textContent="受け取りました。このページは閉じて大丈夫です。"};
+document.getElementById("b").onclick=async()=>{const v="TTCODE:"+c+"|"+s;try{await navigator.clipboard.writeText(v);document.getElementById("m").textContent="受け取りました。このページは閉じて大丈夫です。"}catch(e){const t=document.getElementById("t");t.value=v;t.style.display="block";t.focus();t.select();document.getElementById("m").textContent="ボタンでコピーできませんでした。下の枠が選ばれた状態なので、そのまま ⌘C を押してください。"}};
 </script>
